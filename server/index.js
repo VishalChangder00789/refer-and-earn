@@ -46,7 +46,7 @@ app.post("/api/referrals", async (req, res) => {
     });
 
     // Send referral email
-    // await sendReferralEmail(newReferral);
+    await sendReferralEmail(newReferral);
 
     res.status(201).json(newReferral);
   } catch (error) {
