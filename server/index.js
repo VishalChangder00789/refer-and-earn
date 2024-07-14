@@ -20,17 +20,13 @@ app.get("/api/referrals", async (req, res) => {
     const referrals = await prisma.referral.findMany();
     res.status(200).json(referrals);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "An error occurred while fetching the referrals" });
+    res.status(500).json({ error: error.message });
   }
 });
 
 // Endpoint to handle referral form submission
 app.post("/api/referrals", async (req, res) => {
   const { name, email, phone, referredBy, message } = req.body;
-
-  
 
   // Basic validation
   if (!name || !email || !phone || !referredBy) {
