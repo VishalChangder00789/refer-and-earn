@@ -35,6 +35,16 @@ app.post("/api/referrals", async (req, res) => {
 
   try {
     // Save referral data to the database
+
+    // Check if the user who referred exists
+    const referrer = await prisma.referral.findFirst({
+      where: { email },
+    });
+
+    if (referrer) {
+      return res.status(404).json({ error: "User Exists" });
+    }
+
     const newReferral = await prisma.referral.create({
       data: {
         name,
