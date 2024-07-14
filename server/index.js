@@ -42,7 +42,7 @@ app.post("/api/referrals", async (req, res) => {
     });
 
     if (referrer) {
-      return res.status(404).json({ error: "User Exists" });
+      throw new Error("User already exists");
     }
 
     const newReferral = await prisma.referral.create({
@@ -57,7 +57,6 @@ app.post("/api/referrals", async (req, res) => {
 
     // Send referral email
     await sendReferralEmail(newReferral);
-
     res.status(201).json(newReferral);
   } catch (error) {
     res.status(500).json({ error: error.message });

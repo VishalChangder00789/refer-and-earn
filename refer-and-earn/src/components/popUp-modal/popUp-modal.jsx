@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { Modal, Box, TextField, Button, Typography } from "@mui/material";
 import axios from "axios";
-import { BASE_URL } from "../../url";
+import { BASE_URL_LOCAL } from "../../url";
+import { toast } from "react-toastify";
 
 const ReferralModal = ({ open, onClose }) => {
   const [name, setName] = useState("");
@@ -10,17 +11,33 @@ const ReferralModal = ({ open, onClose }) => {
   const [phone, setPhone] = useState(0);
   const [referredBy, setReferedBy] = useState("");
   const [message, setMessages] = useState("");
+  const [errorMessage, setError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission
-    await axios.post(`${BASE_URL}/api/referrals`, {
-      name,
-      email,
-      phone,
-      referredBy,
-      message,
-    });
+    try {
+      // Handle form submission
+      await axios.post(`${BASE_URL_LOCAL}/api/referrals`, {
+        name,
+        email,
+        phone,
+        referredBy,
+        message,
+      });
+      // Notify success
+      toast.success("Referral submitted successfully!");
+      // Clear form and close modal if needed
+      setName("");
+      setEmail("");
+      setPhone("");
+      setReferedBy("");
+      setMessages("");
+      onClose(); // Close the modal
+    } catch (error) {
+      // Notify error
+      toast.error(error.response.data.error);
+      setError(error.response.data.error);
+    }
   };
 
   return (

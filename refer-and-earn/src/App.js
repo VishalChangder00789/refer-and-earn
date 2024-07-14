@@ -4,6 +4,8 @@ import HeroSection from "./components/hero-section/hero-section";
 import ReferralModal from "./components/popUp-modal/popUp-modal";
 import "./App.css";
 import Navbar from "./components/navbar/navbar";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -12,11 +14,12 @@ const App = () => {
   const closeModal = () => setModalOpen(false);
 
   return (
-    <div className="border border-sky-900">
+    <>
+      <ToastContainer position="top-right" autoClose={1000} />
       <Navbar />
       <HeroSection onOpenModal={openModal} />
       <ReferralModal open={modalOpen} onClose={closeModal} />
-    </div>
+    </>
   );
 };
 
