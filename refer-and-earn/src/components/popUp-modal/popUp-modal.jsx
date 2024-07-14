@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Modal, Box, TextField, Button, Typography } from "@mui/material";
 import axios from "axios";
+import { BASE_URL } from "../../url";
 
 const ReferralModal = ({ open, onClose }) => {
   const [name, setName] = useState("");
@@ -13,7 +14,7 @@ const ReferralModal = ({ open, onClose }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Handle form submission
-    await axios.post("http://localhost:3000/api/referrals", {
+    await axios.post(`${BASE_URL}/api/referrals`, {
       name,
       email,
       phone,
